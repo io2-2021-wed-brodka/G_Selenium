@@ -7,11 +7,11 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 SHOW_BROWSER = True  # TODO(tkarwowski): move to env
-ADMIN_ENDPOINT = "http://127.0.0.1:3001"
-USER_TECH_ENDPOINT = "http://127.0.0.1:3000"
+ADMIN_ENDPOINT = "http://127.0.0.1:3000"
+USER_TECH_ENDPOINT = "http://127.0.0.1:3001"
 
 
-class SeleniumUserTechTest(unittest.TestCase):
+class SeleniumAdminTest(unittest.TestCase):
     browser = None
 
     @classmethod
@@ -42,7 +42,7 @@ class SeleniumUserTechTest(unittest.TestCase):
             sleep(seconds)
 
     def test_register(self):
-        self.browser.get(f"{USER_TECH_ENDPOINT}/login")
+        self.browser.get(f"{ADMIN_ENDPOINT}/login")
         self.wait_a_little(2)
         elem = self.browser.find_element_by_id(id_="sign-up-container")
         elem.click()

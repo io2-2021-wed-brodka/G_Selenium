@@ -21,7 +21,9 @@ sleep 5
 echo "Testing..."
 cd ../G_Selenium || return
 source venv/bin/activate
-python main.py
+#python main.py
+python admin_tests.py
+#python sprint2_selenium_tests.py
 
 echo "All done!"
 kill %1 %2 %3
