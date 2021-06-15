@@ -9,8 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 SHOW_BROWSER = True  # TODO(tkarwowski): move to env
 ADMIN_ENDPOINT = "http://127.0.0.1:3001"
 USER_TECH_ENDPOINT = "http://127.0.0.1:3000"
-station_name = ""
-
+ADDED_TECH=False
 
 def testLoginAdminPage():
 	driver = webdriver.Firefox(executable_path="./geckodriver.exe")
@@ -54,15 +53,20 @@ def testAddStationPage():
 	elem.send_keys("admin")
 	elem = driver.find_element_by_id(id_="login-button-confirm")
 	elem.click()
-	time.sleep(2)
+	time.sleep(1)
 	elem = driver.find_element_by_id(id_="topbar-stations")
 	elem.click()
-	time.sleep(2)
 	elem = driver.find_element_by_id(id_="stations-new")
 	elem.click()
-	# main add station
-	station_name = "Palisadowa"
-	# later
+	elem = driver.find_element_by_id(id_="stations-add-name")
+	elem.send_keys("Palisadowa")
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="stations-add-limit")
+	elem.send_keys(20)
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="stations-add-confirm")
+	elem.click()
+	time.sleep(5)
 	driver.quit()
 
 
@@ -73,11 +77,26 @@ def testRemoveStationPage():
 	elem.send_keys("admin")
 	elem = driver.find_element_by_id(id_="login-password")
 	elem.send_keys("admin")
-	time.sleep(2)
+	elem = driver.find_element_by_id(id_="login-button-confirm")
+	elem.click()
+	time.sleep(1)
 	elem = driver.find_element_by_id(id_="topbar-stations")
 	elem.click()
-	time.sleep(2)
 	elem = driver.find_element_by_id(id_="stations-new")
+	elem.click()
+	elem = driver.find_element_by_id(id_="stations-add-name")
+	elem.send_keys("Wola Park")
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="stations-add-limit")
+	elem.send_keys(20)
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="stations-add-confirm")
+	elem.click()
+	time.sleep(3)
+	elem = driver.find_element_by_id(id_="station-remove-0")
+	elem.click()
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="station-remove-confirm")
 	elem.click()
 	driver.quit()
 
@@ -94,6 +113,9 @@ def testBlockStationPage():
 	elem.click()
 	time.sleep(2)
 	elem = driver.find_element_by_id(id_="stations-block-confirm-2")
+	elem.click()
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="stations-block-confirm")
 	elem.click()
 	time.sleep(2)
 	driver.quit()
@@ -117,6 +139,68 @@ def testUnblockStationPage():
 	elem = driver.find_element_by_id(id_="stations-unblock-confirm-0")
 	elem.click()
 	time.sleep(2)
+	elem = driver.find_element_by_id(id_="stations-unblock-confirm")
+	elem.click()
+	driver.quit()
+
+
+def testAddBikePage():
+	driver = webdriver.Firefox(executable_path="./geckodriver.exe")
+	driver.get(f"{ADMIN_ENDPOINT}/login")
+	elem = driver.find_element_by_id(id_="login-login")
+	elem.send_keys("admin")
+	elem = driver.find_element_by_id(id_="login-password")
+	elem.send_keys("admin")
+	elem = driver.find_element_by_id(id_="login-button-confirm")
+	elem.click()
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="topbar-bikes")
+	elem.click()
+	elem = driver.find_element_by_id(id_="bikes-new")
+	elem.click()
+	elem = driver.find_element_by_id(id_="stations-add-name")
+	elem.send_keys("Palisadowa")
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="stations-add-limit")
+	elem.send_keys(20)
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="stations-add-confirm")
+	elem.click()
+	time.sleep(5)
+	driver.quit()
+
+
+def testRemoveBikePage():
+	driver = webdriver.Firefox(executable_path="./geckodriver.exe")
+	driver.get(f"{ADMIN_ENDPOINT}/login")
+	elem = driver.find_element_by_id(id_="login-login")
+	elem.send_keys("admin")
+	elem = driver.find_element_by_id(id_="login-password")
+	elem.send_keys("admin")
+	elem = driver.find_element_by_id(id_="login-button-confirm")
+	elem.click()
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="topbar-bikes")
+	elem.click()
+	elem = driver.find_element_by_id(id_="bikes-new")
+	elem.click()
+	elem = driver.find_element_by_id(id_="bikes-add-station")
+	stationListSelect = Select(driver.find_element_by_id(id_="select-return-bike-station"))
+	stationListSelect.select_by_visible_text("Uniwersytet")
+	elem.send_keys()
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="stations-add-limit")
+	elem.send_keys(20)
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="stations-add-confirm")
+	elem.click()
+	time.sleep(3)
+	elem = driver.find_element_by_id(id_="station-remove-0")
+	elem.click()
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="station-remove-confirm")
+	elem.click()
+	driver.quit()
 
 
 def testDetailStationPage():
@@ -161,6 +245,54 @@ def testUserListPage():
 	driver.quit()
 
 
+def testAddTechPage():
+	driver = webdriver.Firefox(executable_path="./geckodriver.exe")
+	driver.get(f"{ADMIN_ENDPOINT}/login")
+	elem = driver.find_element_by_id(id_="login-login")
+	elem.send_keys("admin")
+	elem = driver.find_element_by_id(id_="login-password")
+	elem.send_keys("admin")
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="topbar-users")
+	elem.click()
+	elem = driver.find_element_by_id(id_="users-add-tech")
+	elem.click()
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="users-add-tech-login")
+	elem.send_keys("tech")
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="users-add-tech-password")
+	elem.send_keys("tech")
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="users-add-tech-confirm")
+	elem.click()
+	time.sleep(5)
+	driver.quit()
+	ADDED_TECH=True
+
+
+
+def testRemoveTechPage():
+	if not ADDED_TECH:
+		testAddTechPage()
+	driver = webdriver.Firefox(executable_path="./geckodriver.exe")
+	driver.get(f"{ADMIN_ENDPOINT}/login")
+	elem = driver.find_element_by_id(id_="login-login")
+	elem.send_keys("admin")
+	elem = driver.find_element_by_id(id_="login-password")
+	elem.send_keys("admin")
+	time.sleep(1)
+	elem = driver.find_element_by_id(id_="topbar-users")
+	elem.click()
+	elem = driver.find_element_by_id(id_="users-remove-tech-1")
+	elem.click()
+	time.sleep(2)
+	elem = driver.find_element_by_id(id_="users-remove-tech-confirm")
+	elem.click()
+	time.sleep(5)
+	driver.quit()
+
+
 def testBlockUserPage():
 	driver = webdriver.Firefox(executable_path="./geckodriver.exe")
 	driver.get(f"{ADMIN_ENDPOINT}/login")
@@ -198,7 +330,7 @@ def testUnblockUserPage():
 	driver.quit()
 
 
-def testAllPage():
+def testAll():
 	testLoginAdminPage()
 	testLogoutAdminPage()
 	testAddStationPage()

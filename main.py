@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 import admin_test
 import sprint2_selenium_tests
+import tech_test
+import user_test
 
 SHOW_BROWSER = True  # TODO(tkarwowski): move to env
 ADMIN_ENDPOINT = "http://127.0.0.1:3001"
@@ -163,6 +165,8 @@ class SeleniumUserTechTest(unittest.TestCase):
         self.wait_a_little(5)
 
 if __name__ == '__main__':
-    unittest.main()
-    admin_test.testAll()
     sprint2_selenium_tests.testAll()
+    #unittest.main()
+    admin_test.testAll()
+    tech_test.testAll()
+    user_test.testAll()

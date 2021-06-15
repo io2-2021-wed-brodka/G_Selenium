@@ -4,6 +4,8 @@ import time
 import random
 import string
 
+import admin_test
+
 USER_TECH_ENDPOINT = "http://127.0.0.1:3000"
 
 
@@ -56,8 +58,11 @@ def testMalfunctionsAccessPage():
 
 
 def testAll():
+	if not admin_test.ADDED_TECH:
+		admin_test.testAddTechPage()
 	testLoginUserPage()
 	testLogoutUserPage()
+	testMalfunctionsAccessPage()
 
 
 testAll()
