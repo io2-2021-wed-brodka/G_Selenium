@@ -6,9 +6,14 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
+import admin_test
+import sprint2_selenium_tests
+import tech_test
+import user_test
+
 SHOW_BROWSER = True  # TODO(tkarwowski): move to env
-ADMIN_ENDPOINT = "http://127.0.0.1:3000"
-USER_TECH_ENDPOINT = "http://127.0.0.1:3001"
+ADMIN_ENDPOINT = "http://127.0.0.1:3001"
+USER_TECH_ENDPOINT = "http://127.0.0.1:3000"
 
 
 class SeleniumUserTechTest(unittest.TestCase):
@@ -159,6 +164,8 @@ class SeleniumUserTechTest(unittest.TestCase):
         elem.click()
         self.wait_a_little(5)
 
-
 if __name__ == '__main__':
-    unittest.main()
+    sprint2_selenium_tests.testAll()
+    admin_test.testAll()
+    tech_test.testAll()
+    user_test.testAll()
