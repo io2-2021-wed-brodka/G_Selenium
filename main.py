@@ -166,7 +166,6 @@ class SeleniumUserTechTest(unittest.TestCase):
 
 if __name__ == '__main__':
     sprint2_selenium_tests.testAll()
-    #unittest.main()
     admin_test.testAll()
     tech_test.testAll()
     user_test.testAll()
